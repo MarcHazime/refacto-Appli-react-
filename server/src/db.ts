@@ -1,6 +1,6 @@
-const typeorm = require('typeorm');
-const Wilder = require('./entity/Wilder');
-const Skill = require('./entity/Skill');
+import Skill from './entity/Skill';
+import Wilder from './entity/Wilder';
+import typeorm from 'typeorm';
 
 module.exports = new typeorm.DataSource({
   type: 'sqlite',

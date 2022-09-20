@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const wildersController = require('./controller/wilders');
-const skillsController = require('./controller/skills');
+import cors from 'cors';
+import express from 'express';
+import skillsController from './controller/skills';
+import wildersController from './controller/wilder';
 
 const datasource = require('./db');
 
@@ -22,7 +22,7 @@ app.get('/skills', skillsController.read);
 app.patch('/skills/:id', skillsController.update);
 app.delete('/skills/:id', skillsController.delete);
 
-const start = async () => {
+const start = async (): Promise<void> => {
   await datasource.initialize();
 
   app.listen(5000, () => {
