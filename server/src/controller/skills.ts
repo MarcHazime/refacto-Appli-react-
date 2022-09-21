@@ -1,7 +1,8 @@
-const datasource = require('../db');
-const Skill = require('../entity/Skill');
+import DataSource from '../db';
+import { IController } from '../entity/IController';
+import {Skill} from '../entity/Skill';
 
-module.exports = {
+const skillsController: IController = {
   create: async (req, res) => {
     const { name } = req.body;
     if (name.length > 100 || name.length === 0) {
@@ -10,15 +11,15 @@ module.exports = {
         .send('the name should have a length between 1 and 100 characters');
     }
 
-    const existingSkill = await datasource
+    const existingSkill = await DataSource
       .getRepository(Skill)
       .findOneBy({ name });
 
-    if (existingSkill)
+    if (existingSkill !== null)
       return res.status(409).send('a skill with this name already exists');
 
     try {
-      const created = await datasource.getRepository(Skill).save({ name });
+      const created = await DataSource.getRepository(Skill).save({ name });
       res.status(201).send(created);
     } catch (err) {
       console.error(err);
@@ -27,7 +28,7 @@ module.exports = {
   },
   read: async (req, res) => {
     try {
-      const skills = await datasource.getRepository(Skill).find();
+      const skills = await DataSource.getRepository(Skill).find();
       res.send(skills);
     } catch (err) {
       console.error(err);
@@ -43,10 +44,10 @@ module.exports = {
     }
 
     try {
-      const { affected } = await datasource
+      const { affected } = await DataSource
         .getRepository(Skill)
         .update(req.params.id, req.body);
-      if (affected) return res.send('skill updated');
+      if (affected !== 0) return res.send('skill updated');
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
@@ -55,13 +56,15 @@ module.exports = {
   },
   delete: async (req, res) => {
     try {
-      const { affected } = await datasource
+      const { affected } = await DataSource
         .getRepository(Skill)
         .delete(req.params.id);
-      if (affected) return res.send('skill deleted');
+      if (affected !== 0) return res.send('skill deleted');
       res.sendStatus(404);
     } catch (err) {
       console.error(err);
     }
   },
 };
+
+export default skillsController

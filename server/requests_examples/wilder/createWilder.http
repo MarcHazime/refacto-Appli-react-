@@ -1,6 +1,8 @@
-POST http://localhost:3000/wilders
+POST http://localhost:5000/wilders
 Content-Type: application/json
 
 {
-  "name": "john doe"
+  "name": "Simon le Marsupilami",
+  "city": "Pau",
+  "bio": "Je suis palois quel dommage"
 }

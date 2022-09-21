@@ -1,9 +1,8 @@
+import DataSource from'./db';
 import cors from 'cors';
 import express from 'express';
 import skillsController from './controller/skills';
-import wildersController from './controller/wilder';
-
-const datasource = require('./db');
+import wildersController from './controller/wilders';
 
 const app = express();
 
@@ -23,11 +22,11 @@ app.patch('/skills/:id', skillsController.update);
 app.delete('/skills/:id', skillsController.delete);
 
 const start = async (): Promise<void> => {
-  await datasource.initialize();
+  await DataSource.initialize();
 
   app.listen(5000, () => {
     console.log('listening on port 5000');
   });
 };
 
-start();
+void start();

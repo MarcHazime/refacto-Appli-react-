@@ -1,33 +1,21 @@
-import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm'
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
 
-// module.exports = new EntitySchema({
-//   name: 'Skill',
-//   columns: {
-//     id: {
-//       primary: true,
-//       type: 'int',
-//       generated: true,
-//     },
-//     name: {
-//       type: 'text',
-//       unique: true,
-//     },
-//   },
-// });
+import { Grade } from './Grade';
 
 @Entity()
-class Skill {
+export class Skill {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
   name: string
 
-  @Column()
-  votes: number
+  @OneToMany(()=> Grade, grade => grade.skill)
+  grades: Grade[];
+
+
 
   
 }
 
 
-export default Skill
